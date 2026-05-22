@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd *)",
+      "Bash(cd * && git *)",
+      "Bash(python *)",
+      "Bash(pip install *)",
+      "Bash(.venv/Scripts/python *)",
+      "Bash(.venv/Scripts/pip install *)",
+      "Bash(git *)",
+      "WebSearch",
+      "WebFetch",
+      "mcp__knowledge-library__kl_list",
+      "mcp__knowledge-library__kl_get",
+      "mcp__knowledge-library__kl_search",
+      "mcp__knowledge-library__kl_write",
+      "mcp__knowledge-library__kl_update",
+      "mcp__mailroom__list_slugs",
+      "mcp__mailroom__send_file",
+      "mcp__mailroom__send_file_by_path",
+      "mcp__mailroom__list_inbox",
+      "mcp__mailroom__read_inbox_file",
+      "mcp__mailroom__delete_inbox_file",
+      "Bash(python -m http.server *)"
+    ]
+  },
+  "meta": {
+    "template_version": 8,
+    "scaffold_date": "2026-05-22",
+    "project_type": "cc-embed"
+  }
+}

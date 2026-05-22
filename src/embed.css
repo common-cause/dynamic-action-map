@@ -1,0 +1,212 @@
+/*
+ * Common Cause grassroots action map — embed styles.
+ *
+ * All rules are scoped under #cc-grassroots-map-embed (or class ccgm-*) so
+ * they can't bleed into a host WordPress page. Modal is fixed-position and
+ * uses the .ccgm-modalBackdrop class hook which sits outside the mount —
+ * keep those selectors prefixed.
+ */
+
+#cc-grassroots-map-embed {
+  --cc-red: #ED2736;
+  --cc-blue: #4598CC;
+  --cc-navy: #052440;
+  --cc-purple: #804191;
+  --cc-purple-light: #D2BCD8;
+  --cc-gray-100: #F6F7F8;
+  --cc-gray-200: #E9EBED;
+  --cc-text: #1b1f23;
+
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--cc-text);
+}
+#cc-grassroots-map-embed * { box-sizing: border-box; }
+
+/* Full-bleed (break out of narrow WP column) */
+.ccgm-bleed { width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+.ccgm-wrap { width: 100%; padding: 16px 18px; }
+
+.ccgm-card {
+  background: #fff;
+  border: 1px solid var(--cc-gray-200);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(5, 36, 64, 0.08);
+  overflow: hidden;
+}
+.ccgm-header {
+  padding: 18px 18px 12px;
+  background: linear-gradient(180deg, rgba(128, 65, 145, 0.10), rgba(128, 65, 145, 0.00));
+  border-bottom: 1px solid var(--cc-gray-200);
+}
+.ccgm-kicker {
+  font-size: 12px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  color: var(--cc-navy);
+  margin: 0 0 6px;
+  font-weight: 900;
+}
+.ccgm-title {
+  font-size: clamp(18px, 2.2vw, 24px);
+  margin: 0;
+  font-weight: 950;
+  color: var(--cc-navy);
+}
+
+.ccgm-controls { padding: 14px 18px 18px; }
+.ccgm-label { display: block; font-size: 13px; font-weight: 900; color: var(--cc-navy); margin: 0 0 6px; }
+.ccgm-select {
+  width: 100%;
+  border: 1px solid var(--cc-gray-200);
+  border-radius: 14px;
+  padding: 12px 12px;
+  font-size: 16px;
+  background: var(--cc-gray-100);
+  color: var(--cc-text);
+}
+.ccgm-select:focus { outline: 3px solid rgba(69, 152, 204, 0.35); outline-offset: 2px; }
+
+.ccgm-mapWrap {
+  margin: 0 18px 18px;
+  border: 1px solid var(--cc-gray-200);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+}
+.ccgm-mapTopbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--cc-gray-100);
+  border-bottom: 1px solid var(--cc-gray-200);
+}
+.ccgm-mapTopbar strong { color: var(--cc-navy); font-size: 14px; }
+.ccgm-hoverName {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--cc-navy);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(128, 65, 145, .12);
+  border: 1px solid rgba(128, 65, 145, .22);
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ccgm-map { width: 100%; min-height: 360px; }
+@media (min-width: 900px) { .ccgm-map { min-height: 560px; } }
+
+#cc-grassroots-map-embed .ccgm-state { transition: fill .08s ease-in-out; }
+#cc-grassroots-map-embed .ccgm-state:hover { fill: #ED2736 !important; }
+#cc-grassroots-map-embed .ccgm-selected { fill: #ED2736 !important; }
+
+/* Modal */
+.ccgm-modalBackdrop {
+  position: fixed; inset: 0;
+  background: rgba(5, 36, 64, .48);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 999999;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #1b1f23;
+}
+.ccgm-modalBackdrop[data-open="true"] { display: flex; }
+
+.ccgm-modal {
+  width: min(820px, 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(5, 36, 64, .25);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, .15);
+}
+.ccgm-modalTexture {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(69, 152, 204, 0.14), transparent 42%),
+    radial-gradient(circle at 92% 22%, rgba(128, 65, 145, 0.16), transparent 40%),
+    linear-gradient(180deg, rgba(246, 247, 248, 1), rgba(255, 255, 255, 1));
+}
+.ccgm-modalInner { position: relative; padding: 18px 20px 14px; }
+
+.ccgm-modalKicker {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: rgba(5, 36, 64, .75);
+  margin: 0 0 6px;
+  font-weight: 950;
+}
+.ccgm-modalHeadline {
+  margin: 0;
+  font-size: clamp(24px, 2.5vw, 32px);
+  line-height: 1.10;
+  color: #052440;
+  font-weight: 950;
+}
+
+.ccgm-modalBody {
+  margin-top: 10px;
+  max-height: min(56vh, 520px);
+  overflow: auto;
+  color: rgba(27, 31, 35, .92);
+  font-size: 17px;
+  line-height: 1.55;
+}
+.ccgm-modalBody p { margin: 0 0 10px; }
+.ccgm-modalBody ul, .ccgm-modalBody ol { margin: 0 0 10px 22px; }
+
+.ccgm-modalFooter {
+  position: relative;
+  padding: 14px 20px 16px;
+  border-top: 1px solid #E9EBED;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff;
+}
+.ccgm-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 14px;
+  background: #ED2736;
+  color: #fff;
+  font-weight: 950;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.ccgm-cta:hover { filter: brightness(.97); }
+.ccgm-cta:focus { outline: 3px solid rgba(69, 152, 204, 0.35); outline-offset: 2px; }
+
+.ccgm-disclaimer { font-size: 12px; color: rgba(27, 31, 35, .70); }
+
+.ccgm-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  border: 2px solid rgba(237, 39, 54, .75);
+  background: #fff;
+  color: #ED2736;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 950;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(5, 36, 64, .14);
+  z-index: 5;
+}
+.ccgm-close:hover { background: rgba(237, 39, 54, .08); }
+.ccgm-close:focus { outline: 3px solid rgba(69, 152, 204, 0.35); outline-offset: 2px; }

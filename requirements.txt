@@ -1,0 +1,4 @@
+python-dotenv>=1.0.0
+gspread>=6.0.0
+google-auth>=2.27.0
+ccef-connections @ file:///C:/Users/RobKerth/OneDrive%20-%20Common%20Cause%20Education%20Fund/Documents/AI%20Interpretation/ccef-connections

@@ -1,0 +1,12 @@
+tmp/
+*.log
+.DS_Store
+.idea/
+*.iml
+inbox/
+
+# Local dev — never commit these
+.env
+.venv/
+__pycache__/
+*.pyc

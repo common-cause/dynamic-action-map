@@ -1,0 +1,99 @@
+{
+  "_meta": {
+    "source": "Seeded from the inline STATE_DATA in docs/grassrootsmap.html (the existing WP block). After the first Sheet sync, this file is fully owned by scripts/sync_actions.py.",
+    "schema_version": 1,
+    "note": "States omitted from `states` fall back to `default`. The widget also embeds a hardcoded fallback default in embed.js for cases where this file fails to load entirely."
+  },
+  "default": {
+    "url": "https://www.mobilize.us/commoncause/event/758610/",
+    "headline": "Phone Bank with Common Cause!",
+    "description": "Join Common Cause for an important phone bank as we mobilize voters to take action against dangerous legislation in state houses and Congress. We will focus on the most urgent campaigns that need our help. Some of these campaigns may include stopping bills that will make it harder for millions of Americans—especially students, seniors, and veterans—to cast their ballots. We need your help to ensure voters across the country call their elected representatives and make their voices heard.\n\nNo prior experience is necessary—our team will provide full training at the start of each shift!"
+  },
+  "states": {
+    "Colorado": {
+      "url": "https://www.commoncause.org/colorado/work/take-action-join-the-democracy-defense-coalition/",
+      "headline": "Join the Colorado Democracy Defense Coalition",
+      "description": "The Colorado Democracy Defense Coalition is a diverse alliance of Coloradans who are dedicated to safeguarding the 2026 election, watchdogging the process, supporting and assisting voters, and countering anti-voter extremism."
+    },
+    "Florida": {
+      "url": "https://www.mobilize.us/commoncause/event/602726/",
+      "headline": "Democracy Seminar with Common Cause Florida (Lunch & Learn)",
+      "description": "Our ongoing series of Florida Democracy Seminars provide a space where we can come together and learn how to fight back against voter suppression, the pernicious influence of money in politics, and other attacks on our freedom. By understanding changing laws and policies, our rights as Floridians, and the resources available to us, we strengthen our collective ability to ensure the promise of democracy for all Floridians.\n\nWhen we show up informed and empowered, we win."
+    },
+    "Georgia": {
+      "url": "https://www.mobilize.us/commoncause/event/812252/",
+      "headline": "Georgia Action Team",
+      "description": "The Georgia Action Team is a growing community of engaged Common Cause Georgia members, volunteers, and community members committed to protecting and strengthening democracy across our state."
+    },
+    "Indiana": {
+      "url": "https://www.mobilize.us/commoncause/event/907775/",
+      "headline": "Volunteer with Common Cause!",
+      "description": "Join Common Cause Indiana as we partner with Duvall Residential Center to complete on-site voter registration for justice impacted individuals!"
+    },
+    "Maryland": {
+      "url": "https://www.mobilize.us/commoncause/event/758610/",
+      "headline": "Phone Bank with Common Cause!",
+      "description": "We are showing up together again on March 28.\n\nWhen our families are under attack and costs are pushing people to the brink, silence is not an option. We will defend ourselves and our communities against this administration's unjust and cruel acts of violence. America does not belong to strongmen, greedy billionaires, or those who rule through fear. It belongs to us, the people."
+    },
+    "Massachusetts": {
+      "url": "https://actionnetwork.org/letters/time-for-same-day-registration",
+      "headline": "Email your lawmakers: It's time for Same Day Registration",
+      "description": "State lawmakers need to hear from you about our priority voting rights reform. Contact them today!"
+    },
+    "Michigan": {
+      "url": "https://www.mobilize.us/commoncause/event/877828/",
+      "headline": "Michigan Phonebank",
+      "description": "We're looking for passionate individuals to help us spread the word and recruit volunteers for our upcoming events and confirm them for events they have registered for!\n\nBy volunteering your time to make calls, you'll play a crucial role in growing our community and ensuring our events are a success. It's an easy and impactful way to give back and help others get involved. Whether you're a first-time caller or a seasoned pro, your efforts will make a difference.\n\nNo prior experience is necessary—our team will provide full training at the start of each shift!"
+    },
+    "Minnesota": {
+      "url": "https://www.mobilize.us/commoncause/event/758610/",
+      "headline": "Phone Bank with Common Cause!",
+      "description": "We are showing up together again on March 28.\n\nWhen our families are under attack and costs are pushing people to the brink, silence is not an option. We will defend ourselves and our communities against this administration's unjust and cruel acts of violence. America does not belong to strongmen, greedy billionaires, or those who rule through fear. It belongs to us, the people."
+    },
+    "Nebraska": {
+      "url": "https://win.newmode.net/protectnebraska",
+      "headline": "Protect Nebraska's Electoral Advantage",
+      "description": "Nebraskans across the state are speaking out - please write a letter to the editor to tell your senators that our votes matter and LR24CA must fail."
+    },
+    "New Mexico": {
+      "url": "https://form.jotform.com/261031950202038",
+      "headline": "Help Protect the Vote in New Mexico!",
+      "description": "Election Protection is a nonpartisan voter support program that helps ensure every eligible voter can successfully cast their ballot and have their voice heard. Volunteers help voters navigate the voting process, understand their rights, and access trusted election information before and during elections.\n\nElection Protection volunteers support this work through voter outreach, hotline support, community education, and assistance at polling locations. This program is also an opportunity to build community, stay civically engaged, and join a statewide network of volunteers working together to strengthen democracy in New Mexico."
+    },
+    "New York": {
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLSeUiN4FOjCnxdjHRBWWEdwgx_7vQOrBU62-6IqV3bzqb5k5bg/viewform",
+      "headline": "Demand Rank Choice Elections Statewide",
+      "description": "Implementing Ranked Choice Voting in Erie County and Buffalo will take all of us speaking up, organizing, and showing our elected leaders that we're ready for a better method of voting."
+    },
+    "North Carolina": {
+      "url": "https://www.mobilize.us/commoncause/event/947580/",
+      "headline": "North Carolina Member Call",
+      "description": "Common Cause NC is hosting a virtual call on May 14, 2026 at 6:00 p.m., where we will discuss our collective response to the State Board of Elections proposed anti-voter rules and the U.S. Supreme Court's Callais decision."
+    },
+    "Ohio": {
+      "url": "https://www.mobilize.us/commoncause/event/905385/",
+      "headline": "Coffee with Common Cause Ohio",
+      "description": "Join Catherine Turcer and the Common Cause Ohio team to catch up on what's been going on in Ohio and learn how to take action. Grab your morning beverage and join the (virtual) conversation!"
+    },
+    "Oregon": {
+      "url": "https://act.commoncause.org/forms/join-our-election-protection-team?source=direct_link&",
+      "headline": "Join Oregon's Election Protection Team!",
+      "description": "Sign up to join Oregon's Election Protection Team as we spearhead numerous activities throughout the state to ensure our elections are fair and free of any tampering by the Trump administration."
+    },
+    "Pennsylvania": {
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLScgfOH_-_bYA_-C79mbQmBo1srEn4RM_-stpkkBlGGRH97TNg/viewform",
+      "headline": "Watchdogs for Democracy: County Election Monitoring Interest Form",
+      "description": "Please fill out and submit this form if you are interested in helping Common Cause Pennsylvania monitor county election administrations across the state:\n\nHere in Pennsylvania, decisions that determine how easy or hard it is to vote are made at the county level. We are actively recruiting volunteers to be watchdogs for democracy at the local level."
+    },
+    "Rhode Island": {
+      "url": "https://act.commoncause.org/letters/send-a-letter-the-general-assembly-must-pass-the-ri-voting-rights-act/",
+      "headline": "Send a Letter: The General Assembly Must Pass the RI Voting Rights Act!",
+      "description": "The Rhode Island Voting Rights Act was introduced in the Senate Judiciary Committee and the House State Government and Elections Committee. Now, the bill must be voted out of each committee and advanced to the floor of the House and the Senate. Use this easy tool to contact your legislators and ask them to support the RIVRA!"
+    },
+    "Wisconsin": {
+      "url": "https://actionnetwork.org/letters/tell-your-state-senator-make-voting-more-accessible-in-wisconsin",
+      "headline": "Tell your state senator: Make voting more accessible in Wisconsin",
+      "description": "A.B. 312 already passed the State Assembly by voice vote last November but the Senate has not acted on it yet. We need to push the State Senate to pass this legislation and get it to Gov. Evers as soon as possible."
+    }
+  }
+}
