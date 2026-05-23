@@ -32,7 +32,7 @@ Replaces the entire 680-line inline block that's there today.
 ## Setup
 
 1. **Create the Google Sheet** following `docs/sheet_template.md`. Share with the SA email.
-2. **Configure `.env`** — fill in `GOOGLE_SHEET_ID`. The sheets credential is already seeded. For Civis runs, also set `GITHUB_TOKEN` and `GITHUB_REPO`.
+2. **Configure `.env`** — fill in `GOOGLE_SHEET_ID`. The sheets credential is already seeded. For Civis runs, also provision a fine-grained PAT (Contents: Read & Write, scoped to this repo only) as a Civis credential named `DYNAMIC_ACTION_MAP_GITHUB_PAT`.
 3. **First sync (local):**
    ```bash
    .venv\Scripts\python scripts/sync_actions.py --dry-run    # preview

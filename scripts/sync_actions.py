@@ -1,6 +1,6 @@
 """
 sync_actions.py — pull per-state action content from a Google Sheet, write it to
-data/states.json, and (optionally) commit + push to GitHub Pages.
+data/states.json, and (optionally) commit + push to GitHub via the contents API.
 
 Usage:
     python scripts/sync_actions.py              # write states.json; no git push
@@ -8,11 +8,12 @@ Usage:
     python scripts/sync_actions.py --dry-run    # show the JSON; write nothing
 
 Env vars (loaded from .env at the project root):
-    GOOGLE_SHEETS_CREDENTIALS_PASSWORD  Service account JSON. Read by ccef_connections.
-    GOOGLE_SHEET_ID                     The long ID from the Sheet URL.
-    GOOGLE_SHEET_TAB                    Worksheet tab name. Default: "Actions".
-    GITHUB_TOKEN                        PAT with contents:write on the repo (only for --push).
-    GITHUB_REPO                         owner/repo, e.g. common-cause/dynamic-action-map (only for --push).
+    GOOGLE_SHEETS_CREDENTIALS_PASSWORD          Service account JSON. Read by ccef_connections.
+    GOOGLE_SHEET_ID                             The long ID from the Sheet URL.
+    GOOGLE_SHEET_TAB                            Worksheet tab name. Default: "Actions".
+    DYNAMIC_ACTION_MAP_GITHUB_PAT_PASSWORD      Fine-grained PAT scoped to one repo with
+                                                Contents: Read & Write (only for --push).
+    GITHUB_REPO                                  owner/repo, e.g. common-cause/dynamic-action-map.
 
 Sheet schema (case-insensitive header row, see docs/sheet_template.md):
     state        full state name (e.g. "Pennsylvania"), or "DEFAULT" for the fallback row
@@ -31,18 +32,19 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 from dotenv import load_dotenv
 
-from ccef_connections import SheetsConnector
+from ccef_connections import GitHubConnector, SheetsConnector
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 STATES_JSON = REPO_ROOT / "data" / "states.json"
+STATES_JSON_REPO_PATH = "data/states.json"  # Path inside the GitHub repo
+GITHUB_CREDENTIAL_NAME = "DYNAMIC_ACTION_MAP_GITHUB_PAT"
 
 CANONICAL_STATES = {
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
@@ -137,8 +139,13 @@ def build_states_json(rows: list[dict], previous: dict) -> dict:
     }
 
 
+def serialize(data: dict) -> bytes:
+    """Serialize the states data exactly the way it would be written to disk."""
+    return (json.dumps(data, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+
+
 def write_json_if_changed(data: dict) -> bool:
-    new_text = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+    new_bytes = serialize(data)
     # Compare on content only, ignoring the timestamp in _meta.source so identical
     # data doesn't churn the file every day.
     if STATES_JSON.exists():
@@ -146,20 +153,26 @@ def write_json_if_changed(data: dict) -> bool:
         if old.get("default") == data["default"] and old.get("states") == data["states"]:
             return False
     STATES_JSON.parent.mkdir(parents=True, exist_ok=True)
-    STATES_JSON.write_text(new_text, encoding="utf-8")
+    STATES_JSON.write_bytes(new_bytes)
     return True
 
 
-def git_commit_and_push(token: str, repo: str) -> None:
-    env = os.environ.copy()
-    run = lambda *args: subprocess.run(list(args), check=True, cwd=REPO_ROOT, env=env)
-    run("git", "config", "user.email", "actions@common-cause.org")
-    run("git", "config", "user.name", "dynamic-action-map sync")
-    run("git", "add", "data/states.json")
+def publish_to_github(data: dict, repo: str) -> str | None:
+    """
+    Publish states.json to the GitHub repo via the contents API.
+
+    Returns the commit SHA if a write happened, or None if the repo already
+    had identical content (idempotent — no-op days produce no commits).
+    """
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    run("git", "commit", "-m", f"Sync states.json from Google Sheet ({stamp})")
-    push_url = f"https://x-access-token:{token}@github.com/{repo}.git"
-    run("git", "push", push_url, "HEAD:main")
+    with GitHubConnector(credential_name=GITHUB_CREDENTIAL_NAME) as gh:
+        return gh.put_file_if_changed(
+            repo=repo,
+            path=STATES_JSON_REPO_PATH,
+            content_bytes=serialize(data),
+            message=f"Sync states.json from Google Sheet ({stamp})",
+            branch="main",
+        )
 
 
 def main() -> int:
@@ -194,22 +207,26 @@ def main() -> int:
         print(json.dumps(data, indent=2, ensure_ascii=False))
         return 0
 
-    if write_json_if_changed(data):
+    wrote_local = write_json_if_changed(data)
+    if wrote_local:
         print(f"Wrote {STATES_JSON.relative_to(REPO_ROOT)}.")
     else:
-        print("No changes — states.json already up to date.")
-        return 0
+        print("No changes — local states.json already up to date.")
 
     if args.push:
-        token = os.environ.get("GITHUB_TOKEN")
         repo = os.environ.get("GITHUB_REPO")
-        if not token or not repo:
-            print("ERROR: --push requires GITHUB_TOKEN and GITHUB_REPO in env.", file=sys.stderr)
+        if not repo:
+            print("ERROR: --push requires GITHUB_REPO in env.", file=sys.stderr)
             return 2
-        git_commit_and_push(token, repo)
-        print(f"Pushed to {repo}.")
+        # GitHubConnector reads DYNAMIC_ACTION_MAP_GITHUB_PAT_PASSWORD via
+        # CredentialManager; missing-credential errors surface from there.
+        commit_sha = publish_to_github(data, repo)
+        if commit_sha:
+            print(f"Pushed {commit_sha[:7]} to {repo}.")
+        else:
+            print(f"No push needed — {repo} already has identical content.")
     else:
-        print("Skipped git push (no --push flag).")
+        print("Skipped publish (no --push flag).")
     return 0
 
 
