@@ -4,6 +4,33 @@ Sheet-driven version of the commoncause.org state grassroots map. Replaces a 680
 inline WordPress block (preserved at `docs/grassrootsmap.html`) with a thin embed +
 daily Civis sync from a Google Sheet.
 
+## Current Status (2026-05-29)
+
+Sheet is live and the script is producing correct output locally. Civis scheduling
++ web team swap are what's left.
+
+**Done:**
+- Repo published at `github.com/common-cause/dynamic-action-map`, branch `main`,
+  GitHub Pages enabled. Embed loadable at
+  `https://common-cause.github.io/dynamic-action-map/src/embed.js`
+- Sync script publishes via `ccef_connections.GitHubConnector` (no `subprocess git`
+  or checkout on the Civis worker). Per-repo credential: `DYNAMIC_ACTION_MAP_GITHUB_PAT`
+- Source Sheet built (ID in `.env`) with the two-tab pattern:
+  - `National Default Campaign` — single DEFAULT row
+  - `State Campaigns` — 50 state rows, blank rows fall back to default automatically
+- Script reads both tabs, normalizes description whitespace, dedupes default-equivalent
+  rows. Local dry-run shows 17 custom state rows + default.
+
+**Pending:**
+1. Provision `DYNAMIC_ACTION_MAP_GITHUB_PAT` as a Civis credential (fine-grained PAT,
+   Contents: Read & Write, scoped only to this repo)
+2. Set up the Civis script + 06:00 ET daily schedule. **Gotcha**: `requirements.txt`
+   has a `file:///` URL for `ccef-connections` — swap to a Git URL before the Civis
+   install will work.
+3. Web team swap of the WP block to the two-line embed snippet
+4. Minor: two typos in the Sheet's Massachusetts row (`"tiem"` should be "time";
+   `"STate lawmakers"` should be "State lawmakers") — staff to fix.
+
 ## Project Type: cc-embed (with Python sync layer)
 
 cc-embed default has no venv, but this project adds one because of the Python sync

@@ -1,8 +1,7 @@
 {
   "_meta": {
-    "source": "Seeded from the inline STATE_DATA in docs/grassrootsmap.html (the existing WP block). After the first Sheet sync, this file is fully owned by scripts/sync_actions.py.",
-    "schema_version": 1,
-    "note": "States omitted from `states` fall back to `default`. The widget also embeds a hardcoded fallback default in embed.js for cases where this file fails to load entirely."
+    "source": "Google Sheet sync — 2026-05-29T18:49:45+00:00",
+    "schema_version": 1
   },
   "default": {
     "url": "https://www.mobilize.us/commoncause/event/758610/",
@@ -26,14 +25,14 @@
       "description": "The Georgia Action Team is a growing community of engaged Common Cause Georgia members, volunteers, and community members committed to protecting and strengthening democracy across our state."
     },
     "Indiana": {
-      "url": "https://www.mobilize.us/commoncause/event/907775/",
-      "headline": "Volunteer with Common Cause!",
-      "description": "Join Common Cause Indiana as we partner with Duvall Residential Center to complete on-site voter registration for justice impacted individuals!"
+      "url": "https://act.commoncause.org/petitions/end-ice-detention-at-miami-correctional-facility?source=direct_link&",
+      "headline": "Sign Our Petition: End ICE Detention at Miami Correctional Facility",
+      "description": "Join Common Cause Indiana as we urge Governor Braun to end ICE detention at the Miami Correctional Facility."
     },
     "Maryland": {
       "url": "https://www.mobilize.us/commoncause/event/758610/",
       "headline": "Phone Bank with Common Cause!",
-      "description": "We are showing up together again on March 28.\n\nWhen our families are under attack and costs are pushing people to the brink, silence is not an option. We will defend ourselves and our communities against this administration's unjust and cruel acts of violence. America does not belong to strongmen, greedy billionaires, or those who rule through fear. It belongs to us, the people."
+      "description": "We are showing up together again on March 28.\n\nWhen our families are under attack and costs are pushing people to the brink, silence is not an option. We will defend ourselves and our communities against this administration’s unjust and cruel acts of violence. America does not belong to strongmen, greedy billionaires, or those who rule through fear. It belongs to us, the people."
     },
     "Massachusetts": {
       "url": "https://actionnetwork.org/letters/time-for-same-day-registration",
@@ -45,14 +44,9 @@
       "headline": "Michigan Phonebank",
       "description": "We're looking for passionate individuals to help us spread the word and recruit volunteers for our upcoming events and confirm them for events they have registered for!\n\nBy volunteering your time to make calls, you'll play a crucial role in growing our community and ensuring our events are a success. It's an easy and impactful way to give back and help others get involved. Whether you're a first-time caller or a seasoned pro, your efforts will make a difference.\n\nNo prior experience is necessary—our team will provide full training at the start of each shift!"
     },
-    "Minnesota": {
-      "url": "https://www.mobilize.us/commoncause/event/758610/",
-      "headline": "Phone Bank with Common Cause!",
-      "description": "We are showing up together again on March 28.\n\nWhen our families are under attack and costs are pushing people to the brink, silence is not an option. We will defend ourselves and our communities against this administration's unjust and cruel acts of violence. America does not belong to strongmen, greedy billionaires, or those who rule through fear. It belongs to us, the people."
-    },
     "Nebraska": {
       "url": "https://win.newmode.net/protectnebraska",
-      "headline": "Protect Nebraska's Electoral Advantage",
+      "headline": "Protect Nebraska’s Electoral Advantage",
       "description": "Nebraskans across the state are speaking out - please write a letter to the editor to tell your senators that our votes matter and LR24CA must fail."
     },
     "New Mexico": {
@@ -63,15 +57,15 @@
     "New York": {
       "url": "https://docs.google.com/forms/d/e/1FAIpQLSeUiN4FOjCnxdjHRBWWEdwgx_7vQOrBU62-6IqV3bzqb5k5bg/viewform",
       "headline": "Demand Rank Choice Elections Statewide",
-      "description": "Implementing Ranked Choice Voting in Erie County and Buffalo will take all of us speaking up, organizing, and showing our elected leaders that we're ready for a better method of voting."
+      "description": "Implementing Ranked Choice Voting in Erie County and Buffalo will take all of us speaking up, organizing, and showing our elected leaders that we’re ready for a better method of voting."
     },
     "North Carolina": {
       "url": "https://www.mobilize.us/commoncause/event/947580/",
       "headline": "North Carolina Member Call",
-      "description": "Common Cause NC is hosting a virtual call on May 14, 2026 at 6:00 p.m., where we will discuss our collective response to the State Board of Elections proposed anti-voter rules and the U.S. Supreme Court's Callais decision."
+      "description": "Common Cause NC is hosting a virtual call on May 14, 2026 at 6:00 p.m., where we will discuss our collective response to the State Board of Elections proposed anti-voter rules and the U.S. Supreme Court’s Callais decision."
     },
     "Ohio": {
-      "url": "https://www.mobilize.us/commoncause/event/905385/",
+      "url": "https://commoncause-org.zoom.us/meeting/register/WIP-EJyaRdODeKApWlFw9Q#/registration",
       "headline": "Coffee with Common Cause Ohio",
       "description": "Join Catherine Turcer and the Common Cause Ohio team to catch up on what's been going on in Ohio and learn how to take action. Grab your morning beverage and join the (virtual) conversation!"
     },
@@ -89,6 +83,11 @@
       "url": "https://act.commoncause.org/letters/send-a-letter-the-general-assembly-must-pass-the-ri-voting-rights-act/",
       "headline": "Send a Letter: The General Assembly Must Pass the RI Voting Rights Act!",
       "description": "The Rhode Island Voting Rights Act was introduced in the Senate Judiciary Committee and the House State Government and Elections Committee. Now, the bill must be voted out of each committee and advanced to the floor of the House and the Senate. Use this easy tool to contact your legislators and ask them to support the RIVRA!"
+    },
+    "Texas": {
+      "url": "https://www.mobilize.us/commoncause/event/947888/",
+      "headline": "Good Trouble Weekend of Action",
+      "description": "This July, six years after the passing of civil rights hero Congressman Lewis, we will continue the fight for voting rights with “Good Trouble Lives On Weekend of Action (GTLO).”\nThis year’s GTLO is a three-day national mobilization to honor the legacy of Congressman John Lewis by doing what he loved most - organizing, acting, and registering voters.\nJoin us by pledging to take action the week of July 17th!"
     },
     "Wisconsin": {
       "url": "https://actionnetwork.org/letters/tell-your-state-senator-make-voting-more-accessible-in-wisconsin",

@@ -10,21 +10,26 @@ Usage:
 Env vars (loaded from .env at the project root):
     GOOGLE_SHEETS_CREDENTIALS_PASSWORD          Service account JSON. Read by ccef_connections.
     GOOGLE_SHEET_ID                             The long ID from the Sheet URL.
-    GOOGLE_SHEET_TAB                            Worksheet tab name. Default: "Actions".
+    GOOGLE_SHEET_TAB                            State-rows tab. Default: "State Campaigns".
+    GOOGLE_SHEET_DEFAULT_TAB                    Single-row default tab. Default:
+                                                "National Default Campaign".
     DYNAMIC_ACTION_MAP_GITHUB_PAT_PASSWORD      Fine-grained PAT scoped to one repo with
                                                 Contents: Read & Write (only for --push).
     GITHUB_REPO                                  owner/repo, e.g. common-cause/dynamic-action-map.
 
-Sheet schema (case-insensitive header row, see docs/sheet_template.md):
-    state        full state name (e.g. "Pennsylvania"), or "DEFAULT" for the fallback row
+Sheet schema (case-insensitive headers on row 1, see docs/sheet_template.md):
+    state        full state name (e.g. "Pennsylvania"). On the default tab, use "DEFAULT".
     url          action URL
     headline     short headline shown in the modal
     description  body text shown in the modal (newlines render as paragraphs; "- " lines render as bullets)
     enabled      optional — "true"/"false"; rows where this is falsy are skipped
 
-Rows whose action matches the default exactly are dropped from `states` (the widget
-falls back to default for any state not present). Rows for DC or "Other" are ignored —
-those are hardcoded to default in the embed.
+State rows on the state-rows tab may be completely blank (only the `state` cell
+filled) — those states fall back to the default automatically. Rows on the
+state-rows tab that exactly match the default action are also dropped so the
+JSON file stays compact.
+
+Rows for DC or "Other" are ignored — those are hardcoded to default in the embed.
 """
 
 from __future__ import annotations
@@ -61,13 +66,6 @@ CANONICAL_STATES = {
 DEFAULT_KEYS = {"default", "_default_", "default action", "fallback"}
 
 
-def fetch_sheet_rows(sheet_id: str, tab_name: str) -> list[dict]:
-    with SheetsConnector() as conn:
-        spreadsheet = conn.get_spreadsheet(sheet_id)
-        worksheet = spreadsheet.worksheet(tab_name)
-        return worksheet.get_all_records()
-
-
 def normalize_row(row: dict) -> dict:
     out = {}
     for key, value in row.items():
@@ -81,6 +79,32 @@ def is_truthy(value) -> bool:
     if value is None or value == "":
         return True
     return str(value).strip().lower() not in ("false", "0", "no", "off", "disabled")
+
+
+def normalize_description(s: str) -> str:
+    """
+    Normalize paragraph separators so Sheet edits don't leak whitespace artifacts.
+
+    Different staff members produce different paragraph-break patterns when
+    editing multi-line cells in Google Sheets — some leave a literal space on
+    the "blank" line between paragraphs (``"para1\\n \\npara2"``), others
+    trail whitespace after sentences. Normalize everything to bare ``\\n\\n``
+    so the dedup-against-default check actually fires.
+    """
+    if not s:
+        return s
+    lines = [line.strip() for line in s.split("\n")]
+    out: list[str] = []
+    blank = False
+    for line in lines:
+        if not line:
+            if not blank:
+                out.append("")
+                blank = True
+        else:
+            out.append(line)
+            blank = False
+    return "\n".join(out).strip()
 
 
 def validate_row(row: dict) -> tuple[str, dict] | None:
@@ -101,19 +125,43 @@ def validate_row(row: dict) -> tuple[str, dict] | None:
     url = row.get("url", "")
     headline = row.get("headline", "")
     description = row.get("description", "")
+    # Fully-blank state rows are intentional — the state falls back to default. Silent skip.
+    if not url and not headline and not description:
+        return None
+    # Partial rows are almost certainly an editing mistake. Warn loudly.
     if not url or not headline or not description:
-        print(f"  WARN: '{state}' missing url/headline/description — skipping.", file=sys.stderr)
+        print(f"  WARN: '{state}' has some but not all of url/headline/description — skipping.", file=sys.stderr)
         return None
 
     key = "__default__" if is_default else state
-    return (key, {"url": url, "headline": headline, "description": description})
+    return (key, {
+        "url": url,
+        "headline": headline,
+        "description": normalize_description(description),
+    })
 
 
-def build_states_json(rows: list[dict], previous: dict) -> dict:
+def build_states_json(
+    state_rows: list[dict],
+    default_rows: list[dict],
+    previous: dict,
+) -> dict:
+    # Default resolution order (lowest to highest): previous states.json (so a
+    # missing default tab + missing in-tab DEFAULT doesn't wipe out the last
+    # known good default), then the dedicated default tab, then any in-tab
+    # DEFAULT-keyed row on the state-rows tab.
     default = previous.get("default") or {}
-    states: dict[str, dict] = {}
+    if default and "description" in default:
+        # Normalize previous default so dedup against new sheet rows works.
+        default = {**default, "description": normalize_description(default["description"])}
 
-    for raw in rows:
+    for raw in default_rows:
+        result = validate_row(normalize_row(raw))
+        if result and result[0] == "__default__":
+            default = result[1]
+
+    states: dict[str, dict] = {}
+    for raw in state_rows:
         result = validate_row(normalize_row(raw))
         if not result:
             continue
@@ -183,20 +231,26 @@ def main() -> int:
 
     load_dotenv(REPO_ROOT / ".env")
     sheet_id = os.environ.get("GOOGLE_SHEET_ID")
-    tab_name = os.environ.get("GOOGLE_SHEET_TAB", "Actions")
+    state_tab = os.environ.get("GOOGLE_SHEET_TAB", "State Campaigns")
+    default_tab = os.environ.get("GOOGLE_SHEET_DEFAULT_TAB", "National Default Campaign")
     if not sheet_id:
         print("ERROR: GOOGLE_SHEET_ID not set in .env", file=sys.stderr)
         return 2
 
-    print(f"Reading sheet {sheet_id} / tab '{tab_name}' ...")
-    rows = fetch_sheet_rows(sheet_id, tab_name)
-    print(f"  {len(rows)} rows in sheet.")
+    print(f"Reading sheet {sheet_id} ...")
+    # Single connection — fetch both tabs before the context closes.
+    with SheetsConnector() as conn:
+        spreadsheet = conn.get_spreadsheet(sheet_id)
+        default_rows = spreadsheet.worksheet(default_tab).get_all_records()
+        state_rows = spreadsheet.worksheet(state_tab).get_all_records()
+    print(f"  Default tab '{default_tab}': {len(default_rows)} rows")
+    print(f"  State tab '{state_tab}': {len(state_rows)} rows")
 
     previous: dict = {}
     if STATES_JSON.exists():
         previous = json.loads(STATES_JSON.read_text(encoding="utf-8"))
 
-    data = build_states_json(rows, previous)
+    data = build_states_json(state_rows, default_rows, previous)
 
     default_headline = (data["default"].get("headline") or "(none)")[:70]
     print(f"  Default headline: {default_headline}")
