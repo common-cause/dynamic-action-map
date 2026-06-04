@@ -9,7 +9,8 @@
 set -euo pipefail
 
 # Image (civisanalytics/datascience-python) ships python-dotenv; the [sheets]
-# extra brings gspread + google-auth.
-pip install "ccef-connections[sheets] @ git+https://github.com/common-cause/ccef_connections.git"
+# extra brings gspread + google-auth. Pinned to a ccef-connections release
+# tag — bump deliberately when upgrading.
+pip install "ccef-connections[sheets] @ git+https://github.com/common-cause/ccef_connections.git@v0.2.0"
 
 python app/scripts/sync_actions.py --push
