@@ -1,0 +1,4 @@
+# Shell scripts must be LF. A CRLF .sh fails in the Linux container that runs
+# the Civis job with a bad-interpreter error. This pins eol regardless of the
+# editor/OS that touches it next (this repo lives on Windows/OneDrive).
+*.sh text eol=lf
