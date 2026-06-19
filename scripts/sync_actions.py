@@ -209,8 +209,11 @@ def publish_to_github(data: dict, repo: str) -> str | None:
     """
     Publish states.json to the GitHub repo via the contents API.
 
-    Returns the commit SHA if a write happened, or None if the repo already
-    had identical content (idempotent — no-op days produce no commits).
+    Returns the commit SHA if a write happened, or None if the repo already had
+    identical bytes. NOTE: serialize() embeds a wall-clock timestamp in
+    _meta.source, so these bytes differ on every run — this is NOT idempotent on
+    its own. The no-op-day guarantee comes from the caller gating on an actual
+    content change (see main); don't call this unconditionally.
     """
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     with GitHubConnector(credential_name=GITHUB_CREDENTIAL_NAME) as gh:
@@ -272,13 +275,21 @@ def main() -> int:
         if not repo:
             print("ERROR: --push requires GITHUB_REPO in env.", file=sys.stderr)
             return 2
-        # GitHubConnector reads DYNAMIC_ACTION_MAP_GITHUB_PAT_PASSWORD via
-        # CredentialManager; missing-credential errors surface from there.
-        commit_sha = publish_to_github(data, repo)
-        if commit_sha:
-            print(f"Pushed {commit_sha[:7]} to {repo}.")
+        # Only publish when the state content actually changed. serialize() embeds
+        # a wall-clock timestamp in _meta.source, so the bytes differ every run;
+        # publishing unconditionally would commit (and trigger a Pages deploy)
+        # daily even on no-op runs. On Civis the repo is freshly cloned, so
+        # wrote_local reflects a genuine change vs what's already on main.
+        if not wrote_local:
+            print(f"No content change — skipping publish to {repo}.")
         else:
-            print(f"No push needed — {repo} already has identical content.")
+            # GitHubConnector reads DYNAMIC_ACTION_MAP_GITHUB_PAT_PASSWORD via
+            # CredentialManager; missing-credential errors surface from there.
+            commit_sha = publish_to_github(data, repo)
+            if commit_sha:
+                print(f"Pushed {commit_sha[:7]} to {repo}.")
+            else:
+                print(f"No push needed — {repo} already has identical content.")
     else:
         print("Skipped publish (no --push flag).")
     return 0
