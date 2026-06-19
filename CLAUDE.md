@@ -4,10 +4,12 @@ Sheet-driven version of the commoncause.org state grassroots map. Replaces a 680
 inline WordPress block (preserved at `docs/grassrootsmap.html`) with a thin embed +
 daily Civis sync from a Google Sheet.
 
-## Current Status (2026-05-29)
+## Current Status (2026-06-19)
 
-Sheet is live and the script is producing correct output locally. Civis scheduling
-+ web team swap are what's left.
+Live on Civis: the GitHub-backed sync job is created and scheduled daily at 06:00 ET
+with a failure-trigger email to rkerth. First run is a clean no-op (repo content was
+already current). What's left: confirm the write path *from Civis*, and the web-team
+embed swap.
 
 **Done:**
 - Repo published at `github.com/common-cause/dynamic-action-map`, branch `main`,
@@ -19,17 +21,30 @@ Sheet is live and the script is producing correct output locally. Civis scheduli
   - `National Default Campaign` — single DEFAULT row
   - `State Campaigns` — 50 state rows, blank rows fall back to default automatically
 - Script reads both tabs, normalizes description whitespace, dedupes default-equivalent
-  rows. Local dry-run shows 17 custom state rows + default.
+  rows. 17 custom state rows + default.
+- `DYNAMIC_ACTION_MAP_GITHUB_PAT` provisioned as a Civis credential and verified. (The
+  initial paste was truncated → "bad credentials"; re-pasted, confirmed via a len/prefix
+  probe.) The PAT value is proven able to write — a local `--push` pushed `3c2fe73`.
+- Civis GitHub-backed script job created — image `civisanalytics/datascience-python:latest`,
+  body `bash app/civis/sync_actions.sh`, scheduled daily 06:00 ET, failure email to rkerth.
+- Idempotency fix (`de3dd93`): publish is gated on an actual content change, not the
+  `_meta.source` timestamp — no-op days no longer churn a commit + Pages deploy.
+- `.gitattributes` pins `*.sh` to LF (`5171d66`) so the Civis entrypoint can't pick up
+  CRLF on this Windows/OneDrive repo (CRLF = bad-interpreter error in the Linux container).
 
 **Pending:**
-1. Provision `DYNAMIC_ACTION_MAP_GITHUB_PAT` as a Civis credential (fine-grained PAT,
-   Contents: Read & Write, scoped only to this repo)
-2. Set up the Civis script + 06:00 ET daily schedule. **Gotcha**: `requirements.txt`
-   has a `file:///` URL for `ccef-connections` — swap to a Git URL before the Civis
-   install will work.
-3. Web team swap of the WP block to the two-line embed snippet
-4. Minor: two typos in the Sheet's Massachusetts row (`"tiem"` should be "time";
-   `"STate lawmakers"` should be "State lawmakers") — staff to fix.
+1. Confirm the Civis-stored PAT can write end-to-end. The first Civis run was a no-op,
+   so the write path hasn't fired *from Civis* yet (the repo clone uses Civis's own
+   GitHub OAuth, not the PAT — only `publish_to_github` uses the PAT), and there's no
+   pending content change to force one (the MA typos are already fixed — see below).
+   Closest clean check without inventing content: hash the Civis-stored token against
+   the known-good local value (sha256 `7480ebdc…`, the token that pushed `3c2fe73`) — a
+   match means byte-identical, so the write that worked locally will work from Civis.
+   Otherwise the next organic Sheet edit is the natural confirmation.
+2. Web team swap of the WP block to the two-line embed snippet.
+
+The Massachusetts typos noted in earlier status are already fixed in the Sheet
+(Geoff Foster, 3/22/2026); `states.json` matches — nothing to sync.
 
 ## Project Type: cc-embed (with Python sync layer)
 
