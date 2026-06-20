@@ -33,15 +33,15 @@ embed swap.
   CRLF on this Windows/OneDrive repo (CRLF = bad-interpreter error in the Linux container).
 
 **Pending:**
-1. Confirm the Civis-stored PAT can write end-to-end. The first Civis run was a no-op,
-   so the write path hasn't fired *from Civis* yet (the repo clone uses Civis's own
-   GitHub OAuth, not the PAT — only `publish_to_github` uses the PAT), and there's no
-   pending content change to force one (the MA typos are already fixed — see below).
-   Closest clean check without inventing content: hash the Civis-stored token against
-   the known-good local value (sha256 `7480ebdc…`, the token that pushed `3c2fe73`) — a
-   match means byte-identical, so the write that worked locally will work from Civis.
-   Otherwise the next organic Sheet edit is the natural confirmation.
-2. Web team swap of the WP block to the two-line embed snippet.
+1. Web team swap of the WP block to the two-line embed snippet.
+
+**Write path confirmed from Civis (2026-06-19).** A temp `civis/check_pat.py` probe
+run from the Civis job showed the credential holds the proven token (sha256 `7480ebdc…`),
+authenticates from Civis's network (`rate_limit` core = 5000, not the anonymous 60), and
+has repo write access (`push=True`). The earlier "bad credentials" was just a wrong/garbled
+token in the Civis credential; re-pasting the `.env` value fixed it. No org IP allow list
+or egress issue. Probe removed after confirmation. The next organic Sheet edit will produce
+the first live `Pushed <sha>` end-to-end.
 
 The Massachusetts typos noted in earlier status are already fixed in the Sheet
 (Geoff Foster, 3/22/2026); `states.json` matches — nothing to sync.
