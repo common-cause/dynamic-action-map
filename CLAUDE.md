@@ -1,15 +1,18 @@
 # Dynamic Action Map
 
 Sheet-driven version of the commoncause.org state grassroots map. Replaces a 680-line
-inline WordPress block (preserved at `docs/grassrootsmap.html`) with a thin embed +
-daily Civis sync from a Google Sheet.
+inline WordPress block (preserved in the meta-project's `docs/grassrootsmap.html`,
+not in this repo) with a thin embed + daily Civis sync from a Google Sheet.
 
-## Current Status (2026-06-19)
+## Current Status (2026-07-07)
 
 Live on Civis: the GitHub-backed sync job is created and scheduled daily at 06:00 ET
-with a failure-trigger email to rkerth. First run is a clean no-op (repo content was
-already current). What's left: confirm the write path *from Civis*, and the web-team
-embed swap.
+with a failure-trigger email to rkerth. The write path from Civis is confirmed (see
+below). What's left: verify the web-team embed swap on the live commoncause.org page
+(Rob believes it's done, but it's unconfirmed and the host page URL was never recorded
+— see `.claude/handoff.md`). No organic content-change push has landed on `main` since
+go-live (origin checked 2026-07-07) — the Sheet hasn't changed, so the first live
+end-to-end `Pushed <sha>` is still pending, which is expected.
 
 **Done:**
 - Repo published at `github.com/common-cause/dynamic-action-map`, branch `main`,
@@ -99,7 +102,8 @@ python -m http.server 8080
 
 ## Civis Schedule
 
-`sync_actions.py --push` runs daily at 06:00 ET (target). See
+`sync_actions.py --push` runs daily at 06:00 ET via a GitHub-backed Civis job
+(`bash app/civis/sync_actions.sh`). See
 `civis/SCHEDULED_SCRIPTS.md` for details. The script is idempotent — a no-op day
 produces no commit. Auto-deploy via GitHub Actions on every push to `main`.
 
@@ -123,8 +127,21 @@ swap when this project ships.
 - **GitHub Pages enablement:** needs `enablement: true` in the Actions
   `configure-pages` step (already set in `deploy.yml`) the first time, or the deploy
   fails until Pages is enabled manually in repo Settings.
-- **Editable ccef-connections install:** `requirements.txt` points to a local
-  `file:///` URL on the OneDrive checkout. For Civis, swap to a Git URL or vendor
-  the package.
+- **ccef-connections install paths differ by environment:** `requirements.txt`
+  points to a local `file:///` URL (this machine's OneDrive checkout) for local
+  runs; the Civis job instead installs from the pinned Git tag in
+  `civis/sync_actions.sh` (`ccef-connections[sheets] @ git+…@v0.2.0`). Bump the
+  tag there deliberately when upgrading.
 - **Sheet column headers are case-insensitive** but column names matter (`headline`,
   not `Heading`). Whitespace around values is stripped.
+
+## PII / Data Handling
+
+Row-level PII (names, emails, phones, street addresses, gift amounts) **never gets
+committed to git** — repos here are org-visible via shared corpora and export pipelines.
+Any directory that will receive raw dumps or query results gets gitignored BEFORE the
+first file lands (allowlist known-clean file types; never enumerate known-bad files).
+Committed derivatives must be masked or aggregated; fabricate example rows in docs.
+Row-level people-data lives in access-controlled systems (BigQuery, ROI, Action Network,
+shared Sheets) — point at it, don't copy it. Full policy: knowledge library entry
+`pii-handling-policy` (`kl_get`).
