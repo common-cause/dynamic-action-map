@@ -1,3 +1,5 @@
 python-dotenv>=1.0.0
-# [sheets] extra brings gspread + google-auth (ccef-connections >= 0.2.0)
-ccef-connections[sheets] @ file:///C:/Users/RobKerth/OneDrive%20-%20Common%20Cause%20Education%20Fund/Documents/AI%20Interpretation/ccef-connections
+# ccef-connections installs from a local clone whose path differs per machine —
+# install it editable, separately ([sheets] brings gspread + google-auth, >= 0.2.0):
+#   pip install -e "<path-to-ccef-connections>[sheets]"
+# `sync_projects.py --setup dynamic-action-map` (meta-project) does this automatically.
