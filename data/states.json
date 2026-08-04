@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "source": "Google Sheet sync — 2026-06-19T22:08:13+00:00",
+    "source": "Google Sheet sync — 2026-08-04T10:04:19+00:00",
     "schema_version": 1
   },
   "default": {
@@ -23,6 +23,11 @@
       "url": "https://www.mobilize.us/commoncause/event/812252/",
       "headline": "Georgia Action Team",
       "description": "The Georgia Action Team is a growing community of engaged Common Cause Georgia members, volunteers, and community members committed to protecting and strengthening democracy across our state."
+    },
+    "Illinois": {
+      "url": "https://www.ilarj.org/pledge",
+      "headline": "Vote in Her Honor",
+      "description": "Illinois has the highest number of exonerations for wrongful convictions in the United States, leading to thousands of voters being wrongfully denied the right to vote while falsely imprisoned. Being convicted of a crime does not take away your citizenship, and in a democracy every citizen should have the right to vote. However, in IL incarcerated citizens are not able to vote\n\nOne of our coalition partners, the Illinois Alliance for Reentry and Justice, has launched Vote in Her Honor, an initiative honoring the more than 1,400 women in Cook County whose votes have been disenfranchised by incarceration. I invite you to pledge to vote in honor of one of these women in November by clicking here."
     },
     "Indiana": {
       "url": "https://act.commoncause.org/petitions/end-ice-detention-at-miami-correctional-facility?source=direct_link&",
