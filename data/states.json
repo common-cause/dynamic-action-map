@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "source": "Google Sheet sync — 2026-08-04T10:04:19+00:00",
+    "source": "Google Sheet sync — 2026-08-05T10:04:44+00:00",
     "schema_version": 1
   },
   "default": {
@@ -85,9 +85,9 @@
       "description": "Please fill out and submit this form if you are interested in helping Common Cause Pennsylvania monitor county election administrations across the state:\n\nHere in Pennsylvania, decisions that determine how easy or hard it is to vote are made at the county level. We are actively recruiting volunteers to be watchdogs for democracy at the local level."
     },
     "Rhode Island": {
-      "url": "https://act.commoncause.org/letters/send-a-letter-the-general-assembly-must-pass-the-ri-voting-rights-act/",
-      "headline": "Send a Letter: The General Assembly Must Pass the RI Voting Rights Act!",
-      "description": "The Rhode Island Voting Rights Act was introduced in the Senate Judiciary Committee and the House State Government and Elections Committee. Now, the bill must be voted out of each committee and advanced to the floor of the House and the Senate. Use this easy tool to contact your legislators and ask them to support the RIVRA!"
+      "url": "https://protectthevote.net/?source=ccri",
+      "headline": "Help Protect the Vote in Rhode Island",
+      "description": "Common Cause RI is recruiting volunteers for our Election Protection field program. Be our eyes and ears on the ground during the upcoming elections and help your neighbors vote!"
     },
     "Texas": {
       "url": "https://www.mobilize.us/commoncause/event/947888/",
