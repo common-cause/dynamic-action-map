@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "source": "Google Sheet sync — 2026-08-10T10:03:50+00:00",
+    "source": "Google Sheet sync — 2026-08-21T10:02:44+00:00",
     "schema_version": 1
   },
   "default": {
@@ -70,7 +70,7 @@
       "description": "Common Cause NC is hosting a virtual call on May 14, 2026 at 6:00 p.m., where we will discuss our collective response to the State Board of Elections proposed anti-voter rules and the U.S. Supreme Court’s Callais decision."
     },
     "Ohio": {
-      "url": "https://commoncause-org.zoom.us/meeting/register/JLWienRiQO2G_nGtzMqcdg#/registration",
+      "url": "https://commoncause-org.zoom.us/meeting/register/qfTH1SWpS0ah6hd9PLfgEA#/registration",
       "headline": "Coffee with Common Cause Ohio",
       "description": "Join Catherine Turcer and the Common Cause Ohio team to catch up on what's been going on in Ohio and learn how to take action. Grab your morning beverage and join the (virtual) conversation!"
     },
