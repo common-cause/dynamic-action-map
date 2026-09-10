@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "source": "Google Sheet sync — 2026-08-25T10:03:24+00:00",
+    "source": "Google Sheet sync — 2026-09-10T10:03:44+00:00",
     "schema_version": 1
   },
   "default": {
@@ -90,9 +90,9 @@
       "description": "Common Cause RI is recruiting volunteers for our Election Protection field program. Be our eyes and ears on the ground during the upcoming elections and help your neighbors vote!"
     },
     "Texas": {
-      "url": "https://www.mobilize.us/commoncause/event/947888/",
-      "headline": "Good Trouble Weekend of Action",
-      "description": "This July, six years after the passing of civil rights hero Congressman Lewis, we will continue the fight for voting rights with “Good Trouble Lives On Weekend of Action (GTLO).”\nThis year’s GTLO is a three-day national mobilization to honor the legacy of Congressman John Lewis by doing what he loved most - organizing, acting, and registering voters.\nJoin us by pledging to take action the week of July 17th!"
+      "url": "https://www.mobilize.us/commoncause/event/995221/",
+      "headline": "Help Protect the Vote in Texas!",
+      "description": "Help us ensure no Texan loses out on their right to vote due to confusion, intimidation, or suppression. As a nonpartisan Election Protection volunteer, you will help voters navigate the voting process, understand their rights, and access trusted election information before and during elections."
     },
     "Wisconsin": {
       "url": "https://actionnetwork.org/letters/tell-your-state-senator-make-voting-more-accessible-in-wisconsin",
