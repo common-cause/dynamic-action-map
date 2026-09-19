@@ -25,8 +25,19 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
+      # Publish an ALLOWLIST, not the checkout. The repo also holds CLAUDE.md,
+      # README.md, docs/, scripts/ and the Civis manifest — none of which is
+      # the site. Paths are preserved so the embed snippet on commoncause.org
+      # (…/src/embed.js → ../data/states.json, embed.css) keeps resolving.
+      # A file not copied here is not published, whatever git tracks.
+      - name: Assemble the site
+        run: |
+          mkdir -p _site/src _site/data
+          cp index.html _site/
+          cp src/embed.js src/embed.css _site/src/
+          cp data/states.json _site/data/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: "."
+          path: "_site"
       - id: deployment
         uses: actions/deploy-pages@v4
