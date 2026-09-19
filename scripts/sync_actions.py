@@ -37,6 +37,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -131,6 +132,14 @@ def validate_row(row: dict) -> tuple[str, dict] | None:
     # Partial rows are almost certainly an editing mistake. Warn loudly.
     if not url or not headline or not description:
         print(f"  WARN: '{state}' has some but not all of url/headline/description — skipping.", file=sys.stderr)
+        return None
+    # Scheme check, upstream of the embed's own. The browser's `new URL()` accepts
+    # `javascript:` and `data:`, and the embed now refuses those too — but refusing
+    # HERE turns a bad cell into a loud WARN in the Civis log, instead of a state
+    # that silently renders the national default (Georgia did, from ~2026-08-25,
+    # because its url cell held a page title).
+    if not re.match(r"^https?://", url.strip(), re.IGNORECASE):
+        print(f"  WARN: '{state}' url is not an http(s) URL ({url[:60]!r}) — skipping.", file=sys.stderr)
         return None
 
     key = "__default__" if is_default else state

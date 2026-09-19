@@ -19,8 +19,10 @@ script — it's free-form prose explaining the workflow.
 ## Required setup
 
 1. **Create the Sheet** with the two tabs above.
-2. **Share** the Sheet with the service account email
-   (`com-dbt@proj-tmc-mem-com.iam.gserviceaccount.com`) as **Viewer**.
+2. **Share** the Sheet with the sync's service account as **Viewer**. Its address is the
+   `client_email` inside `GOOGLE_SHEETS_CREDENTIALS_PASSWORD` in the project `.env` (ask
+   Rob). It is deliberately not written here: this repo is public, and a published
+   principal name is the pretext for a "please share your sheet with…" phish.
 3. **Copy** the Sheet ID from the URL — the long string between `/d/` and `/edit` — into
    `.env` as `GOOGLE_SHEET_ID`.
 

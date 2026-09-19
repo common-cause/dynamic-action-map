@@ -4,6 +4,8 @@ tmp/
 .idea/
 *.iml
 inbox/
+# Session handoff — local working state, and this repo publishes its whole tree to Pages.
+HANDOFF.md
 
 # Local dev — never commit these
 .env

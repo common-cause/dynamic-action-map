@@ -134,9 +134,17 @@
       return html;
     }
 
+    function safeUrl(u) {
+      // Only http(s) may become an href. `new URL()` alone accepts `javascript:`
+      // and `data:`, and this value arrives from a shared Google Sheet cell — one
+      // edited cell must never become script running in the host page's origin.
+      return /^https?:\/\//i.test(String(u || "").trim());
+    }
+
     function getEntry(state) {
       var entry = STATE_DATA[state];
       if (!entry || !entry.url || !entry.headline || !entry.description) return DEFAULT_ACTION;
+      if (!safeUrl(entry.url)) return DEFAULT_ACTION;
       try { new URL(entry.url); } catch (e) { return DEFAULT_ACTION; }
       return entry;
     }
