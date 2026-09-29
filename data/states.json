@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "source": "Google Sheet sync — 2026-09-26T10:02:52+00:00",
+    "source": "Google Sheet sync — 2026-09-29T10:03:15+00:00",
     "schema_version": 1
   },
   "default": {
@@ -9,6 +9,11 @@
     "description": "Join Common Cause for an important phone bank as we mobilize voters to take action against dangerous legislation in state houses and Congress. We will focus on the most urgent campaigns that need our help. Some of these campaigns may include stopping bills that will make it harder for millions of Americans—especially students, seniors, and veterans—to cast their ballots. We need your help to ensure voters across the country call their elected representatives and make their voices heard.\n\nNo prior experience is necessary—our team will provide full training at the start of each shift!"
   },
   "states": {
+    "California": {
+      "url": "https://www.mobilize.us/noonprop39/",
+      "headline": "Join us to defeat Prop 39!",
+      "description": "Help inform California voters about how Prop 39 would make voting harder, less secure, and more expensive. Say NO to Trump's power grab in CA!"
+    },
     "Colorado": {
       "url": "https://www.commoncause.org/colorado/work/take-action-join-the-democracy-defense-coalition/",
       "headline": "Join the Colorado Democracy Defense Coalition",
